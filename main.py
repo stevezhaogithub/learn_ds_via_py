@@ -38,3 +38,5 @@ def sumOfNViaFormula(n):
 print(sumOfNViaFormula(100000000))
 print("=================================")
 print(sumOfN(100000000))
+
+# add a test
