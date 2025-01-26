@@ -38,3 +38,27 @@ class BinaryTreeNode:
 
     def get_root_value(self):
         return self.key
+
+    # 先序遍历
+    def pre_order(self):
+        print(self.key)
+        if self.left_child is not None:
+            self.left_child.pre_order()
+        if self.right_child is not None:
+            self.right_child.pre_order()
+
+    # 后序遍历
+    def post_order(self):
+        if self.left_child is not None:
+            self.left_child.post_order()
+        if self.right_child is not None:
+            self.right_child.post_order()
+        print(self.key)
+
+    # 中序遍历
+    def in_order(self):
+        if self.left_child is not None:
+            self.left_child.in_order()
+        print(self.key)
+        if self.right_child is not None:
+            self.right_child.in_order()

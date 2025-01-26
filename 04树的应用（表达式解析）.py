@@ -71,7 +71,7 @@ def build_expression_tree(expr):
     return btree
 
 
-# 递归方式计算表达式的值
+# 递归方式计算表达式的值（后序遍历）
 def evaluate(etree: BinaryTreeNode):
     opers = {'+': operator.add, '-': operator.sub, '*': operator.mul, '/': operator.truediv}
     left_tree = etree.get_left_child()
@@ -81,3 +81,53 @@ def evaluate(etree: BinaryTreeNode):
         return fn(evaluate(left_tree), evaluate(right_tree))
     else:
         return etree.get_root_value()
+
+
+# 通过明显的后序遍历实现表达式计算值
+def post_order_evaluate_btree(etree: BinaryTreeNode):
+    opers = {'+': operator.add, '-': operator.sub, '*': operator.mul, '/': operator.truediv}
+    lexp = None
+    rexp = None
+    if etree:
+        lexp = post_order_btree(etree.get_left_child())
+        rexp = post_order_btree(etree.get_right_child())
+        if lexp and rexp:
+            return opers[etree.get_root_value()](lexp, rexp)
+        else:
+            return etree.get_root_value()
+
+
+# 二叉树的遍历
+# 1. 先序遍历二叉树
+def pre_order_btree(tree: BinaryTreeNode):
+    if tree:
+        print(tree.get_root_value())
+        pre_order_btree(tree.get_left_child())
+        pre_order_btree(tree.get_right_child())
+
+
+# 2. 中序遍历二叉树
+def inorder_btree(tree: BinaryTreeNode):
+    if tree:
+        inorder_btree(tree.get_left_child())
+        print(tree.get_root_value())
+        inorder_btree(tree.get_right_child())
+
+
+# 3. 后序遍历二叉树
+def post_order_btree(tree: BinaryTreeNode):
+    if tree:
+        post_order_btree(tree.get_left_child())
+        post_order_btree(tree.get_right_child())
+        print(tree.get_root_value())
+
+
+# 4. 通过中序遍历，实现将全括号表达式生成“中缀表达式”
+def print_infix_exp(etree: BinaryTreeNode):
+    # 最终生成的中缀表达式存放到 infix_expr 变量中
+    infix_expr = ''
+    if etree:
+        infix_expr = '(' + print_infix_exp(etree.get_left_child())
+        infix_expr += str(etree.get_root_value())
+        infix_expr += print_infix_exp(etree.get_right_child()) + ')'
+    return infix_expr
